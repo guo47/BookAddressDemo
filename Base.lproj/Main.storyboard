@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TPZ-2c-DvT">
+                                <rect key="frame" x="0.0" y="64" width="600" height="436"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="sly-SE-k3S"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="UfO-Pq-Kb1"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51b-ES-bgJ" userLabel="使用AddressBook获取通讯录">
+                                <rect key="frame" x="0.0" y="560" width="300" height="30"/>
+                                <state key="normal" title="使用AddressBook获取通讯录"/>
+                                <connections>
+                                    <action selector="ABButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eO9-Rg-mxc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="la3-Te-vgN">
+                                <rect key="frame" x="300" y="560" width="300" height="30"/>
+                                <state key="normal" title="使用Contact获取通讯录"/>
+                                <connections>
+                                    <action selector="ContactButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZcR-5E-cJg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="TPZ-2c-DvT" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="64" id="0b3-t6-bvV"/>
+                            <constraint firstAttribute="trailing" secondItem="TPZ-2c-DvT" secondAttribute="trailing" id="3J5-Zf-09P"/>
+                            <constraint firstAttribute="trailing" secondItem="la3-Te-vgN" secondAttribute="trailing" id="4gL-NW-CpB"/>
+                            <constraint firstItem="51b-ES-bgJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8eI-no-ndC"/>
+                            <constraint firstItem="la3-Te-vgN" firstAttribute="leading" secondItem="51b-ES-bgJ" secondAttribute="trailing" id="D4o-fM-HJ3"/>
+                            <constraint firstItem="la3-Te-vgN" firstAttribute="height" secondItem="51b-ES-bgJ" secondAttribute="height" id="FsO-sc-qcx"/>
+                            <constraint firstItem="la3-Te-vgN" firstAttribute="bottom" secondItem="51b-ES-bgJ" secondAttribute="bottom" id="NMi-Sh-mf0"/>
+                            <constraint firstItem="la3-Te-vgN" firstAttribute="width" secondItem="51b-ES-bgJ" secondAttribute="width" id="bVU-59-U1Z"/>
+                            <constraint firstAttribute="bottom" secondItem="TPZ-2c-DvT" secondAttribute="bottom" constant="100" id="o4b-hr-KX7"/>
+                            <constraint firstItem="la3-Te-vgN" firstAttribute="top" secondItem="51b-ES-bgJ" secondAttribute="top" id="rEo-Bi-KVH"/>
+                            <constraint firstAttribute="bottom" secondItem="51b-ES-bgJ" secondAttribute="bottom" constant="10" id="ww4-HH-wyk"/>
+                            <constraint firstItem="TPZ-2c-DvT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xcd-uZ-rUt"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="_tableView" destination="TPZ-2c-DvT" id="yF4-L8-gVW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="317" y="484"/>
+        </scene>
+    </scenes>
+</document>
