@@ -45,12 +45,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma mark - 显示通讯录的方法
+
 - (IBAction)ABButtonClick:(id)sender {
+    
     [self getContactUsingAddressBook];
 }
 
 
 - (IBAction)ContactButtonClick:(id)sender {
+    
     [self getContactUsingContact];
 }
 
@@ -61,7 +66,11 @@
     }
     
     //遍历通讯录
-    id contact = [[ABClass alloc] init];
+    id contact = [[ABClass alloc] initWithBlock:^{
+        //用户取消授权后，提示用户在“设置-隐私-通讯录”中重新设置APP的通讯录访问权限
+        //此处可以弹出alterview
+        return;
+    }];
     _maContact = [contact arrayOfContacts];
     [contact releaseAddressBook];
     [_tableView reloadData];
@@ -73,12 +82,52 @@
         [_maContact removeAllObjects];
     }
     
-    id contact = [[Contacts alloc] init];
+    id contact = [[Contacts alloc] initWithBlock:^{
+        //用户取消授权后，提示用户在“设置-隐私-通讯录”中重新设置APP的通讯录访问权限
+        //此处可以弹出alterview
+        return;
+    }];
     _maContact = [contact arrayOfContacts];
-    
     [_tableView reloadData];
 }
 
+
+#pragma mark - 添加通讯录的方法
+- (IBAction)addRecordWithAB:(id)sender {
+    
+    //构造一条记录
+    ContactModel *tempModel = [[ContactModel alloc] init];
+    tempModel.name = @"郭世清";
+    tempModel.tel = @"13700272437";
+    
+    //添加一条记录
+    id contact = [[ABClass alloc] initWithBlock:^{
+        //用户取消授权后，提示用户在“设置-隐私-通讯录”中重新设置APP的通讯录访问权限
+        //此处可以弹出alterview
+        return;
+    }];
+    [contact addRecordWithModel:tempModel];
+    [contact releaseAddressBook];
+    [_tableView reloadData];
+}
+
+
+- (IBAction)addRecordWithContact:(id)sender {
+    
+    //构造一条记录
+    ContactModel *tempModel = [[ContactModel alloc] init];
+    tempModel.name = @"郭世清";
+    tempModel.tel = @"12345678901";
+    
+    //添加一条记录
+    id contact = [[Contacts alloc] initWithBlock:^{
+        //用户取消授权后，提示用户在“设置-隐私-通讯录”中重新设置APP的通讯录访问权限
+        //此处可以弹出alterview
+        return;
+    }];
+    [contact addRecordWithModel:tempModel];
+    [_tableView reloadData];
+}
 
 
 #pragma mark - UITableview代理方法

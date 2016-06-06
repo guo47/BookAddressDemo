@@ -9,13 +9,6 @@
 #import "ABClass.h"
 
 
-#pragma mark addressbook的头文件
-#import <AddressBook/AddressBook.h>
-#import <AddressBookUI/AddressBookUI.h> //没用到UI，不包含还是会报错
-
-#import "ContactModel.h"
-
-
 //已有的宏，详见Common.h
 #define SYSTEM_VERSION       ([[[UIDevice currentDevice] systemVersion] floatValue])
 
@@ -153,6 +146,48 @@ UIImageView *myImage = [[UIImageView alloc] initWithFrame:CGRectMake(200, 0, 50,
 myImage.opaque = YES;
 */
 
+- (id)initWithBlock:(void (^)())complate
+{
+    if (self = [super init]) {
+        [self makeAddressBookWithBlock:complate];
+    }
+    return self;
+}
+
+// 创建一个通讯录对象
+- (BOOL)makeAddressBookWithBlock:(void (^)())complate
+{
+    [self releaseAddressBook];
+    
+    // 先获取授权
+    if (ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized) {
+        
+        // 获取通讯录权限
+        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+        ABAddressBookRequestAccessWithCompletion(_addressBook, ^(bool granted, CFErrorRef error){dispatch_semaphore_signal(sema);});
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    }
+    
+    // 再次获取授权，如果授权有问题返回
+    if (ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized)
+    {
+        complate();
+        return NO;
+    }
+    
+    // 定义一个addressbook实例
+    if (SYSTEM_VERSION >= 6.0)
+    {
+        _addressBook =  ABAddressBookCreateWithOptions(NULL, NULL);
+    }
+    else
+    {
+        _addressBook = ABAddressBookCreate();
+    }
+    return YES;
+}
+
+
 // 获取通讯录中的所有数据
 - (NSMutableArray *)arrayOfContacts
 {
@@ -198,32 +233,10 @@ myImage.opaque = YES;
     return maContact;
 }
 
-
 - (NSArray *)importArrayOfContacts{
-    
-    // 先获取授权
-    if (ABAddressBookGetAuthorizationStatus() != kABAuthorizationStatusAuthorized) {
-        
-        // 获取通讯录权限
-        dispatch_semaphore_t sema = dispatch_semaphore_create(0);
-        ABAddressBookRequestAccessWithCompletion(_addressBook, ^(bool granted, CFErrorRef error){dispatch_semaphore_signal(sema);});
-        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
-    }
-    
-    // 定义一个addressbook实例
-    if (SYSTEM_VERSION >= 6.0)
-    {
-        _addressBook =  ABAddressBookCreateWithOptions(NULL, NULL);
-    }
-    else
-    {
-        _addressBook = ABAddressBookCreate();
-    }
 
     // 获得所有联系人
     NSArray *allPeople = CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(_addressBook));
-#warning 此处不能release，否则通讯录就被释放了
-    //    CFRelease(addressBook);
     return allPeople;
 }
 
@@ -301,12 +314,55 @@ myImage.opaque = YES;
 }
 
 
+// 往通讯录中添加一条信息
+- (BOOL)addRecordWithModel:(ContactModel *)record
+{
+    // 判断电话号码是否存在，存在直接返回
+    NSMutableArray *maRecord = [self arrayOfContacts];
+    
+//    // 根据电话号码判断是否继续添加用户
+//    for (ContactModel *model in maRecord) {
+//        // 电话号码是多个号码拼接的结果，所以用串找串的方式
+//        NSRange range = [model.tel rangeOfString:record.tel];
+//        if (NSNotFound != range.location) {
+//            return YES;
+//        }
+//    }
+    
+    // 新建一条通讯录记录
+    ABRecordRef newPerson = ABPersonCreate();
+    CFErrorRef error = NULL;
+    
+    //////////////////////////// 添加实际内容 ////////////////////////////
+    // 名字和公司名称
+    ABRecordSetValue(newPerson, kABPersonFirstNameProperty, (__bridge CFTypeRef)(record.name), &error);
+    ABRecordSetValue(newPerson, kABPersonOrganizationProperty, (__bridge CFTypeRef)@"来自爱办公", &error);
+
+    // 电话号码，暂时不区分有没有逗号
+    ABMutableMultiValueRef multiPhone = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+    ABMultiValueAddValueAndLabel(multiPhone, (__bridge CFTypeRef)(record.tel), kABPersonPhoneHomeFAXLabel, NULL);
+    ABRecordSetValue(newPerson, kABPersonPhoneProperty, multiPhone, &error);
+    CFRelease(multiPhone);
+    
+    // 头像
+    ABPersonSetImageData(newPerson, (__bridge CFDataRef)record.headData, &error);
+    ////////////////////////////         ////////////////////////////
+    
+    // 写入通讯录
+    ABAddressBookAddRecord(_addressBook, newPerson, &error);
+    ABAddressBookSave(_addressBook, &error);
+    CFRelease(newPerson);
+    
+    return YES;
+}
+
 
 // 释放通讯录对象
 - (void)releaseAddressBook
 {
     if (nil != _addressBook) {
         CFRelease(_addressBook);
+        _addressBook = nil;
     }
 }
 

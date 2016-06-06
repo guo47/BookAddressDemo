@@ -26,33 +26,55 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="51b-ES-bgJ" userLabel="使用AddressBook获取通讯录">
-                                <rect key="frame" x="0.0" y="560" width="300" height="30"/>
-                                <state key="normal" title="使用AddressBook获取通讯录"/>
+                                <rect key="frame" x="0.0" y="520" width="300" height="30"/>
+                                <state key="normal" title="使用AB获取通讯录"/>
                                 <connections>
                                     <action selector="ABButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eO9-Rg-mxc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="la3-Te-vgN">
-                                <rect key="frame" x="300" y="560" width="300" height="30"/>
+                                <rect key="frame" x="300" y="520" width="300" height="30"/>
                                 <state key="normal" title="使用Contact获取通讯录"/>
                                 <connections>
                                     <action selector="ContactButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZcR-5E-cJg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXD-GR-jLW">
+                                <rect key="frame" x="0.0" y="570" width="300" height="30"/>
+                                <state key="normal" title="使用AB添加记录"/>
+                                <connections>
+                                    <action selector="addRecordWithAB:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wJO-Qa-89U"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z40-oX-2aW">
+                                <rect key="frame" x="300" y="570" width="300" height="30"/>
+                                <state key="normal" title="使用Contact添加记录"/>
+                                <connections>
+                                    <action selector="addRecordWithContact:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VPn-rg-MuT"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="TPZ-2c-DvT" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="64" id="0b3-t6-bvV"/>
+                            <constraint firstItem="Z40-oX-2aW" firstAttribute="leading" secondItem="WXD-GR-jLW" secondAttribute="trailing" id="2et-gB-UDd"/>
                             <constraint firstAttribute="trailing" secondItem="TPZ-2c-DvT" secondAttribute="trailing" id="3J5-Zf-09P"/>
                             <constraint firstAttribute="trailing" secondItem="la3-Te-vgN" secondAttribute="trailing" id="4gL-NW-CpB"/>
+                            <constraint firstItem="Z40-oX-2aW" firstAttribute="height" secondItem="WXD-GR-jLW" secondAttribute="height" id="7go-IH-htK"/>
                             <constraint firstItem="51b-ES-bgJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8eI-no-ndC"/>
                             <constraint firstItem="la3-Te-vgN" firstAttribute="leading" secondItem="51b-ES-bgJ" secondAttribute="trailing" id="D4o-fM-HJ3"/>
                             <constraint firstItem="la3-Te-vgN" firstAttribute="height" secondItem="51b-ES-bgJ" secondAttribute="height" id="FsO-sc-qcx"/>
+                            <constraint firstAttribute="bottom" secondItem="WXD-GR-jLW" secondAttribute="bottom" id="II2-0l-6Ne"/>
                             <constraint firstItem="la3-Te-vgN" firstAttribute="bottom" secondItem="51b-ES-bgJ" secondAttribute="bottom" id="NMi-Sh-mf0"/>
+                            <constraint firstItem="Z40-oX-2aW" firstAttribute="top" secondItem="WXD-GR-jLW" secondAttribute="top" id="OF4-lf-buZ"/>
+                            <constraint firstItem="Z40-oX-2aW" firstAttribute="width" secondItem="WXD-GR-jLW" secondAttribute="width" id="UkG-1o-BNX"/>
+                            <constraint firstItem="WXD-GR-jLW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="awj-qp-sXF"/>
                             <constraint firstItem="la3-Te-vgN" firstAttribute="width" secondItem="51b-ES-bgJ" secondAttribute="width" id="bVU-59-U1Z"/>
+                            <constraint firstAttribute="trailing" secondItem="Z40-oX-2aW" secondAttribute="trailing" id="mih-I7-nLb"/>
                             <constraint firstAttribute="bottom" secondItem="TPZ-2c-DvT" secondAttribute="bottom" constant="100" id="o4b-hr-KX7"/>
                             <constraint firstItem="la3-Te-vgN" firstAttribute="top" secondItem="51b-ES-bgJ" secondAttribute="top" id="rEo-Bi-KVH"/>
-                            <constraint firstAttribute="bottom" secondItem="51b-ES-bgJ" secondAttribute="bottom" constant="10" id="ww4-HH-wyk"/>
+                            <constraint firstItem="Z40-oX-2aW" firstAttribute="bottom" secondItem="WXD-GR-jLW" secondAttribute="bottom" id="uNB-nu-olA"/>
+                            <constraint firstAttribute="bottom" secondItem="51b-ES-bgJ" secondAttribute="bottom" constant="50" id="ww4-HH-wyk"/>
                             <constraint firstItem="TPZ-2c-DvT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xcd-uZ-rUt"/>
                         </constraints>
                     </view>
